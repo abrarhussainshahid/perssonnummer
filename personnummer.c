@@ -33,6 +33,26 @@ label:
         }
     }
     printf("Personnummer format correct: %s\n", personNummer);
+    //Format is ok. Remove now '-' to string 8111124321
+    /*for (int i = 0; i < strlen(personNummer); ++i)
+    {
+        if (personNummer[i] = '-')
+        {
+            personNummer[i] = ' ';
+        }
+    }*/
+    for (int i = 0, j = 0; personNummer[i] != '\0'; ++i)
+    {
+        if ((personNummer[i] >= '0' && personNummer[i] <= '9'))
+        {
+            personNummerWithoutDash[j] = personNummer[i];
+            j++;
+        }
+
+        personNummerWithoutDash[j] = '\0';
+    }
+    printf("Personnummer without dash '-': ");
+    puts(personNummerWithoutDash);
 
     return 0;
 }
