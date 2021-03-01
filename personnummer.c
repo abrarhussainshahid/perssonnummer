@@ -1,7 +1,8 @@
 /**
  * @file personnummer.c
  * @author Abrar Hussain Shahid (abrar.hussain-shahid@yaelev.se)
- * @brief 
+ * @brief A program to check if a swedish personal identity number (personnummer)
+ *       is correct or not.
  * @version 0.1
  * @date 2021-02-27
  * 
@@ -62,13 +63,43 @@ label:
 
         isSecondNumber = !isSecondNumber;
     }
+
+    printf("------------------------\n");
+    printf("Calculate control digit \n");
+    printf("------------------------\n");
+
+    int sumOf_9_digit, sumOfAllnumbers = 0;
+    for (int i = strlen(personNummerWithoutDash) - 1; i >= 0; --i)
+    {
+        //convert char to integer
+        int digit = personNummerWithoutDash[i] - '0';
+
+        if (isSecondNumber == 1)
+            digit = digit * 2;
+
+        // We add two digits to handle cases that make two digits after
+        // doubling
+        sumOfAllnumbers += digit / 10;
+        sumOfAllnumbers += digit % 10;
+
+        isSecondNumber = !isSecondNumber;
+    }
+
+    int lastDigit = personNummerWithoutDash[9] - '0';
+    sumOf_9_digit = sumOfAllnumbers - lastDigit;
+    int controlDigit = (10 - (sumOf_9_digit % 10)) % 10;
+
+    printf("Sum Of_9_digit: %d\n", sumOf_9_digit);
+    printf("After modulo operation: %d\n", sumOf_9_digit % 10);
+    printf("Control digit: %d\n", controlDigit);
+
     if ((numberSum % 10 == 0))
     {
-        printf("Personnummer is valid");
+        printf("Personnummer is valid\n");
     }
     else
     {
-        printf("Personnummer is not valid");
+        printf("Personnummer is not valid\n");
     }
 
     return 0;
